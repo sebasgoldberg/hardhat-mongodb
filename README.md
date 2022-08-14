@@ -1,64 +1,56 @@
-# hardhat-network-alias
+# hardhat-mongodb
 
-This plug-in it is used to add network aliases, organizing the aliases by group.
+This plug-in it is used to add a mongodb db instance to the hardhat runtime environment.
 
-[Hardhat](https://hardhat.org) network alias plugin. 
+[Hardhat](https://hardhat.org) mongodb plugin. 
 
 ## What
 
-This plugin will help you with:
-- I you want the configuration of one network to be applied in another network.
+This plugin will help you with the usage of a mongodb database in your hardhat's projects.
 
 ## Installation
 
 ```bash
-npm install @sebasgoldberg/hardhat-network-alias
+npm install @sebasgoldberg/hardhat-mongodb
 ```
 
 Import the plugin in your `hardhat.config.js`:
 
 ```js
-require("@sebasgoldberg/hardhat-network-alias");
+require("@sebasgoldberg/hardhat-mongodb");
 ```
 
 Or if you are using TypeScript, in your `hardhat.config.ts`:
 
 ```ts
-import "@sebasgoldberg/hardhat-network-alias";
+import "@sebasgoldberg/hardhat-mongodb";
 ```
 
 ## Environment extensions
 
-This plugin extends the Hardhat Runtime Environment by adding an `networkAlias` field.
+This plugin extends the Hardhat Runtime Environment by adding a `mongodb` field.
 
-Here is an example to get the network name, considering the alias config.
+Here is an example to get the mongodb db:
 
 ``` typescript
 // ...
-this.hre.networkAlias.getNetworkName("aave")
+const db = await this.hre.mongodb.getDb()
 // ...
 ```
-
-For the configuration defined below, if it is runnning the `'hardhat'`, will be obtained the `'mainnet'` network.
-
-Please checkout the tests for further details.
-
 
 ## Configuration
 
-In the following example it is configured the `'aave'` group.
-
-For the `'aave'` group `'localhost'` and `'hardhat'` will be considered as `'mainnet'` network.
+Here is the optional configuration of this plugin:
 
 ``` typescript
 const config: HardhatUserConfig = {
-  // ...
-  networkAliases: {
-    'aave': {
-      'localhost': 'mainnet',
-      'hardhat': 'mainnet'
+    // ...
+    mongodb: {
+        dbConnectionString: 'mongodb://localhost:27017',
+        dbName: 'hardhat'
     }
-  }
-  // ...
+    // ...
 }
 ```
+
+The example above, shows the default configuration values.

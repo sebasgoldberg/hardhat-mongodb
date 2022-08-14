@@ -3,16 +3,11 @@
 // To extend one of Hardhat's types, you need to import the module where it has been defined, and redeclare it.
 import "hardhat/types/config";
 import "hardhat/types/runtime";
-import { NetworkAlias } from "./NetworkAlias";
 
-type NetworkName = string
 
-export interface IAliasForNetwork {
-    [aliasFor: string]: NetworkName
-}
-
-export interface IAliasForNetworkByGroup {
-    [groupAlias: string]: IAliasForNetwork
+export interface IMongoDbConfig {
+    dbConnectionString: string,
+    dbName: string,
 }
 
 
@@ -22,7 +17,7 @@ declare module "hardhat/types/config" {
     // We extend the UserConfig type, which represents the config as written
     // by the users. Things are normally optional here.
     export interface HardhatUserConfig {
-        networkAliases?: IAliasForNetworkByGroup
+        mongodb?: Partial<IMongoDbConfig>
     }
 
 
@@ -32,14 +27,16 @@ declare module "hardhat/types/config" {
     // Normally, you don't want things to be optional here. As you can apply
     // default values using the extendConfig function.
     export interface HardhatConfig {
-        networkAliases: IAliasForNetworkByGroup,
+        mongodb: IMongoDbConfig
     }
 }
+
+import { HardhatMongoDb } from "./MongoDb";
 
 declare module "hardhat/types/runtime" {
     // This is an example of an extension to the Hardhat Runtime Environment.
     // This new field will be available in tasks' actions, scripts, and tests.
     export interface HardhatRuntimeEnvironment {
-        networkAlias: NetworkAlias;
+        mongodb: HardhatMongoDb
     }
 }
