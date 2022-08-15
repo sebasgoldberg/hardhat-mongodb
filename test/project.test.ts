@@ -1,6 +1,6 @@
 // tslint:disable-next-line no-implicit-dependencies
 import { assert } from "chai";
-import { Db } from "mongodb";
+import { Db, MongoClient } from "mongodb";
 
 import { useEnvironment } from "./helpers";
 import { HardhatMongoDb } from "../src/MongoDb";
@@ -28,6 +28,14 @@ describe("Integration tests examples", function () {
                 Db
             )
         });
+
+        it("Should be possible to get the client.", async function () {
+            assert.instanceOf(
+                await this.hre.mongodb.client,
+                MongoClient
+            )
+        });
+
     });
 
 });
