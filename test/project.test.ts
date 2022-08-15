@@ -31,7 +31,7 @@ describe("Integration tests examples", function () {
 
         it("Should be possible to get the client.", async function () {
             assert.instanceOf(
-                await this.hre.mongodb.client,
+                await this.hre.mongodb.getClient(),
                 MongoClient
             )
         });

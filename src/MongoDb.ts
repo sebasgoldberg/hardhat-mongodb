@@ -5,7 +5,7 @@ import { Db, MongoClient } from "mongodb";
 export class HardhatMongoDb{
 
     protected db: Db|undefined
-    public client: MongoClient|undefined
+    protected client: MongoClient|undefined
 
     constructor(protected hre: HardhatRuntimeEnvironment){
         this.client = new MongoClient(this.hre.config.mongodb.dbConnectionString)
@@ -13,14 +13,23 @@ export class HardhatMongoDb{
 
     async getDb(): Promise<Db>{
 
-        if (!this.client) throw new HardhatPluginError('hardhat-mongodb', 'MongoClient not created')
+        const client = this.getClient()
 
         if (!this.db){
-            await this.client.connect()
-            this.db = this.client.db(this.hre.config.mongodb.dbName)
+            await client.connect()
+            this.db = client.db(this.hre.config.mongodb.dbName)
         }
 
         return this.db
+
+    }
+
+    getClient(): MongoClient{
+
+        if (!this.client) 
+            throw new HardhatPluginError('hardhat-mongodb', 'MongoClient not created')
+
+        return this.client
 
     }
     
