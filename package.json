@@ -1,6 +1,6 @@
 {
   "name": "@sebasgoldberg/hardhat-mongodb",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Hardhat plugin to use existing contract instances.",
   "repository": "github:sebasgoldberg/hardhat-mongodb",
   "author": "Sebastian Goldberg",
